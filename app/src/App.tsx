@@ -1,13 +1,11 @@
 import { useState } from 'react';
 import CameraSelector from './components/CameraSelector';
 import CameraViewport from './components/CameraViewport';
-import DangerAlert from './components/DangerAlert';
 import DebugPanel from './components/DebugPanel';
 import Header from './components/Header';
 import SystemBanner from './components/SystemBanner';
-import { usePedestrianSimulation } from './hooks/usePedestrianSimulation';
 import { useSystemStats } from './hooks/useSystemStats';
-import type { CameraView } from './types/simulation';
+import type { CameraView, Pedestrian } from './types/simulation';
 
 const App = () => {
   const [activeCamera, setActiveCamera] = useState<CameraView>('front');
@@ -18,13 +16,13 @@ const App = () => {
   const [confidence, setConfidence] = useState(85);
 
   const systemStats = useSystemStats();
-  const { pedestrians, dangerLevel } = usePedestrianSimulation(activeCamera);
+  const pedestrians: Pedestrian[] = [];
 
   return (
     <div className="min-h-screen bg-gray-900 p-6">
       <div className="max-w-7xl mx-auto">
         <Header
-          pedestrianCount={pedestrians.length}
+          pedestrianCount={0}
           debugMode={debugMode}
           onToggleDebug={() => setDebugMode(prev => !prev)}
         />
@@ -33,14 +31,12 @@ const App = () => {
           <div className={debugMode ? 'lg:col-span-2' : 'lg:col-span-3'}>
             <CameraSelector activeCamera={activeCamera} onSelect={setActiveCamera} />
             <CameraViewport
-              pedestrians={pedestrians}
               activeCamera={activeCamera}
               debugMode={debugMode}
               fps={fps}
               cameraSource={cameraSource}
               systemStats={systemStats}
             />
-            <DangerAlert dangerLevel={dangerLevel} />
             {!debugMode && <SystemBanner aiModel={aiModel} fps={fps} />}
           </div>
 

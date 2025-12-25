@@ -8,8 +8,9 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - ./app:/app                    # Mount only the app folder
-      - /app/node_modules              # Protect node_modules
+      - ./app:/app
+      - ./data/videos:/app/public/videos:ro
+      - /app/node_modules
     environment:
       - CHOKIDAR_USEPOLLING=true
       - WATCHPACK_POLLING=true

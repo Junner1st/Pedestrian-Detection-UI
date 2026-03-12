@@ -8,13 +8,16 @@ THIS PROGRAM WAS MADE BY LLM.
 
 ## Quick Start
 
+Put your videos under `data/videos` and name them as front.mp4 / back.mp4 .
+Pathes defined in config `app/.env` .
+
 ```bash
 docker compose up --build -d
 ```
 
 This command:
 
-1. Builds the Node 24 image defined in `Dockerfile` (installs npm deps inside `/app`).
+1. Builds the node:24-alpine image defined in `Dockerfile` (installs npm deps inside `/app`).
 2. Starts the `app` service with the source folder mounted into the container for hot reloads.
 3. Exposes Vite on <http://localhost:3000>.
 
